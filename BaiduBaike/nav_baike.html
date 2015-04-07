@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>nav_baike.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="../scripts/jquery-1.7.2.min.js"></script>
+    <style type="text/css">    	
+    	dl, dt, dd{margin:0; padding:0}
+    	#nav{width:800px; height:43px; background-color:#5ba1e7; position:relative; z-index:999;}
+    	#nav_bg{width:800px; height:202px; position:absolute; left:0; top:43px; opacity:0.8;background-color:#024f9a; }
+    	#nav dl{display:block; float:left;}
+    	#nav dl dt{text-align:center; line-height:2.5em; color:#fff; font-family:"微软雅黑";}
+    	#nav dl dt a{display:block; height:43px; width:120px;}
+    	#nav dl dt a:link,#nav dt a:visited{text-decoration:none; color:#fff} 
+    	#nav dl dt a:hover{text-decoration:none; color:#fff}   
+    	
+    	#nav dl dd{width:120px; height:180px; opacity:0.8; font-family:"微软雅黑"; font-size:12px; padding:10px 0;}
+    	#nav dl dd div{margin:0 10px; float:left; height:35px;}
+    	#nav dl dd a{line-height:2em;} 	
+    	#nav dl dd a:link,#nav dl dd a:visited{text-decoration:none; color:#a2c9f0; border-bottom:2px solid transparent;}
+    	#nav dl dd a:hover{text-decoration:none; color:#fff; border-bottom:2px solid #fff; font-weight:bold;}
+    	
+    	#content{width:800px; height:500px; background-color:#c0c0c0; position:relative;}
+    </style>
+    <script type="text/javascript">
+    	var Nav = function(id){
+    		this.id = id;
+    		this.nav = $("#" + this.id);
+    		this.bg = $("#" + this.id + "_bg");
+    		this.dt = $("#" + this.id + " dl dt");    		
+    	}
+    	Nav.prototype = {
+    		//初始化
+    		init : function(){
+    			var $nav = this.nav;
+    			$nav.find("dl dd").hide();
+    			this.hideBg();
+    		},
+    		showBg : function(){
+    			this.bg.show();
+    		},
+    		hideBg : function(){
+    			this.bg.hide();
+    		},
+    		mouseOverDt : function(){
+    			this.showBg();
+    		}   		
+    	}
+    	$(function(){
+    		var nav = new Nav("nav");
+    		nav.init();
+    		
+    		$("#nav dl dt").mouseenter(function(event){
+    			//bg
+    			$("#nav_bg").fadeIn(500)
+    			$("#nav dd").fadeIn(700);    			
+    			//dt
+    			$("#nav dt").css("background-color", "transparent");
+    			$(this).css("background-color", "#3989d8");
+    			//dd
+    			$("#nav dd").css("background-color", "transparent");
+    			$(this).siblings("dd").css("background-color", "#024f9a");
+    			
+    			console.log("mouseenter: dt");
+    			//event.stopPropagation(); 	
+    		});
+    		
+    		$("#nav dl dd").mouseenter(function(event){
+    			//bg
+    			$("#nav_bg").show(); 
+    			$("#nav dd").show();  
+    			//dd
+    			$("#nav dd").css("background-color", "transparent");
+    			$(this).css("background-color", "#024f9a");
+    			//dt
+    			$("#nav dt").css("background-color", "transparent");
+    			$(this).siblings("dt").css("background-color", "#3989d8");
+    			 
+    			console.log("mouseenter: dd");
+    			//event.stopPropagation(); 
+    		});
+    		
+    		$("#nav_bg").mouseleave(function(){
+    			$(this).hide();
+    			$("#nav dd").hide();
+    			$("#nav dt").css("background-color", "transparent");
+    			
+    			console.log("mouseout: bg");
+    		})
+    	})
+    </script>
+
+  </head>
+  
+  <body>
+    <div id="nav">
+    	<div id="nav_bg"></div>
+    	<dl>
+    		<dt><a href="#">分类</a></dt>
+    		<dd>
+    			<div><a href="#">自然</a></div>
+    			<div><a href="#">文化</a></div>
+    			<div><a href="#">地理</a></div>
+    			<div><a href="#">历史</a></div>
+    		</dd>
+    	</dl>
+    	<dl>
+    		<dt><a href="#">特色百科</a></dt>
+    		<dd>
+    			<div><a href="#">历史上的今天</a></div>
+    			<div><a href="#">数字博物馆</a></div>
+    		</dd>
+    	</dl>    	
+    </div>
+    <div id="content"></div>
+  </body>
+</html>
